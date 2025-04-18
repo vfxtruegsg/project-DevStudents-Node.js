@@ -1,8 +1,8 @@
 import pino from 'pino-http';
 import cors from 'cors';
 import express from 'express';
-// import router from './routers/index.js';
-// поки що немає роутера
+import router from './routers/index.js';
+
 import cookieParser from 'cookie-parser';
 
 import { getEnvVar } from './utils/getEnvVar.js';
@@ -26,7 +26,7 @@ export const startServer = () => {
     }),
   );
 
-  //   app.use(router);
+  app.use(router);
 
   app.use(notFoundHandler);
 
