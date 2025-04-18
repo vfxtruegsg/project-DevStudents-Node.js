@@ -1,5 +1,6 @@
+import express from 'express';
 import { authenticate } from '../middlewares/authenticate.js';
 
-router.use(authenticate);
+const router = express();
 
-router.get('/', ctrlWrapper(getStudentsController));
+router.use(authenticate);
