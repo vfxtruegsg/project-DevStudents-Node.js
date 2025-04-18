@@ -2,6 +2,7 @@
   "name": "project-devstudents-node",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "lint": "eslint src/**/*.js",
     "start": "node ./src/index.js",
@@ -15,6 +16,18 @@
     "@eslint/js": "^9.24.0",
     "eslint": "^9.24.0",
     "globals": "^16.0.0",
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "pino-pretty": "^13.0.0"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "http-errors": "^2.0.0",
+    "joi": "^17.13.3",
+    "mongoose": "^8.13.2",
+    "pino-http": "^10.4.0"
   }
 }
