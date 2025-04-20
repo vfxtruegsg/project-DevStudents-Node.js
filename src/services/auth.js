@@ -68,3 +68,21 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
     ...newSession,
   });
 };
+export const getSession = (filter) => SessionsCollection.findOne(filter);
+
+export const resetPassword = async (_id, oldPassword, newPassword) => {
+  const user = await UsersCollection.findById(_id);
+  if (!user) {
+    throw createHttpError(404, 'User not found');
+  }
+
+  const passwordCompare = await bcrypt.compare(oldPassword, user.password);
+  if (!passwordCompare) {
+    throw createHttpError(401, 'Old password is incorrect');
+  }
+
+  const hashNewPassword = await bcrypt.hash(newPassword, 10);
+
+  user.password = hashNewPassword;
+  await user.save();
+};

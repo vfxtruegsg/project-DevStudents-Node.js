@@ -7,6 +7,9 @@ const usersSchema = new Schema(
     password: { type: String, required: true },
     balance: { type: Number, default: 0 },
     avatarUrl: { type: String },
+    oldPassword: {
+      type: String,
+    },
   },
   { timestamps: true, versionKey: false },
 );
