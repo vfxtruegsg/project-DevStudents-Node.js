@@ -12,6 +12,7 @@ import {
   deleteTransactionController,
   getAllTransactionsController,
   getTransactionsCategoryController,
+  getTransactionsSummaryController,
   updateTransactionController,
 } from '../controllers/transactions.js';
 
@@ -41,4 +42,7 @@ router.delete(
 );
 
 router.get('/categories', ctrlWrapper(getTransactionsCategoryController));
+
+router.get('/summary', ctrlWrapper(getTransactionsSummaryController));
+
 export default router;
