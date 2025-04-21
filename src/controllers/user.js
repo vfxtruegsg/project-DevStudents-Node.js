@@ -20,7 +20,7 @@ export const getUserByIdController = async (req, res) => {
   });
 };
 
-export const updateUserAvatar = async (req, res) => {
+export const updateUserAvatarController = async (req, res) => {
   const { id } = req.params;
   const avatar = req.file;
 
@@ -60,15 +60,15 @@ export const updateUserAvatar = async (req, res) => {
 
 export const updateUserController = async (req, res) => {
   const { id } = req.params;
-  const { oldPassword, newPassword, ...userData } = req.body || {};
-
+  // const { oldPassword, newPassword, ...userData } = req.body || {};
+  const userData = req.body || {};
   const user = await userServices.getUserById(id);
   if (!user) {
     throw createError(404, `User with id=${id} not found`);
   }
-  if (oldPassword && newPassword) {
-    await resetPassword(id, oldPassword, newPassword);
-  }
+  // if (oldPassword && newPassword) {
+  //   await resetPassword(id, oldPassword, newPassword);
+  // }
 
   const result = await userServices.updateUser({ _id: id }, userData);
 

@@ -6,7 +6,7 @@ export const userSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
   password: Joi.string().min(6).max(64).required(),
   balance: Joi.number().max(15000),
-  oldPassword: Joi.string().min(6).max(64),
+  // oldPassword: Joi.string().min(6).max(64),
 });
 
 export const userUpdateSchema = Joi.object({
@@ -16,6 +16,6 @@ export const userUpdateSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).optional().messages({
     'string.email': 'Invalid email format',
   }),
-  oldPassword: Joi.string().min(6).max(64).optional(),
-  newPassword: Joi.string().min(6).max(64).optional(),
+  // oldPassword: Joi.string().min(6).max(64).optional(),
+  // newPassword: Joi.string().min(6).max(64).optional(),
 });

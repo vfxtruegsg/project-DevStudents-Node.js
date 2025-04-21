@@ -1,14 +1,12 @@
 import { UsersCollection } from '../db/models/user.js';
 import { SessionsCollection } from '../db/models/session.js';
+
 export const getUserById = async (id) => {
   const user = await UsersCollection.findById(id);
 
   if (!user) {
-    console.warn(`No user found with id: ${id}`);
     return null;
   }
-
-  console.log('Found user:', user);
   return user;
 };
 
