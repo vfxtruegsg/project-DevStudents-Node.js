@@ -68,6 +68,7 @@ export const refreshUsersSession = async ({ sessionId, refreshToken }) => {
     ...newSession,
   });
 };
+
 export const getSession = (filter) => SessionsCollection.findOne(filter);
 
 export const resetPassword = async (_id, oldPassword, newPassword) => {
