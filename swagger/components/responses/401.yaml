@@ -1,0 +1,16 @@
+description: Unauthorized error
+content:
+  application/json:
+    schema:
+      type: object
+      required:
+        - status
+        - message
+
+      properties:
+        status:
+          type: integer
+          example: 401
+        message:
+          type: string
+          example: 'Auth header should be of type Bearer'

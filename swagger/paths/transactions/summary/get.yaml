@@ -1,0 +1,96 @@
+tags:
+  - Transactions
+summary: Get list of transactions in period
+operationId: getTransactionsInPeriod
+description: 'Get list of transactions in period with this endpoint'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: month
+    schema:
+      type: number
+      example: 5
+  - in: query
+    name: year
+    schema:
+      type: number
+      example: 2025
+responses:
+  '200':
+    description: Successfully find a transactions!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully find a transactions!'
+            data:
+              type: object
+              required:
+                - Main expenses
+                - Products
+                - Car
+                - Self care
+                - Child care
+                - Household products
+                - Education
+                - Leisure
+                - Other expenses
+                - Entertainment
+                - Incomes
+                - totalExpenses
+
+              properties:
+                Main expenses:
+                  type: number
+                  example: 130
+                Products:
+                  type: number
+                  example: 130
+                Car:
+                  type: number
+                  example: 130
+                Self care:
+                  type: number
+                  example: 130
+                Child care:
+                  type: number
+                  example: 130
+                Household products:
+                  type: number
+                  example: 130
+                Education:
+                  type: number
+                  example: 130
+                Leisure:
+                  type: number
+                  example: 130
+                Other expenses:
+                  type: number
+                  example: 130
+                Entertainment:
+                  type: number
+                  example: 130
+                Incomes:
+                  type: number
+                  example: 130
+                totalExpenses:
+                  type: number
+                  example: 130
+
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'

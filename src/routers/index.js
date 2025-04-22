@@ -4,7 +4,7 @@ import authRouter from './auth.js';
 
 const router = Router();
 
-router.use('/transaction', transactionsRouter);
+router.use('/transactions', transactionsRouter);
 router.use('/auth', authRouter);
 
 export default router;
