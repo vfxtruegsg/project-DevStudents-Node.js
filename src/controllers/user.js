@@ -25,19 +25,24 @@ export const updateUserAvatarController = async (req, res) => {
   const avatar = req.file;
 
   if (!avatar) {
+    console.error('No avatar file provided');
     throw createError(400, 'Avatar file is required');
   }
 
+  console.log('Getting user by ID:', id);
   const user = await userServices.getUserById(id);
   if (!user) {
+    console.error(`User with id=${id} not found`);
     throw createError(404, `User with id=${id} not found`);
   }
 
-  if (user.avatar?.public_id) {
+  if (user.avatar?.public_id && user.avatar.public_id !== 'default-avatar') {
+    console.log('Deleting old avatar from Cloudinary');
     await cloudUse.deleteFileFromCloudinary(user.avatar.public_id);
   }
 
   const avatarData = await cloudUse.saveAvatarToCloudinary(avatar);
+  console.log('Cloudinary upload response:', avatarData);
 
   const result = await userServices.updateUser(
     { _id: id },
@@ -48,6 +53,13 @@ export const updateUserAvatarController = async (req, res) => {
       },
     },
   );
+
+  if (!result || !result.data || !result.data.avatar) {
+    throw createError(500, 'Failed to update user avatar');
+  }
+
+  // Assuming the result includes user data with the updated avatar
+  const updatedUser = result.data || result; // Ensure we safely access the user data
 
   res.json({
     status: 200,
@@ -60,15 +72,12 @@ export const updateUserAvatarController = async (req, res) => {
 
 export const updateUserController = async (req, res) => {
   const { id } = req.params;
-  // const { oldPassword, newPassword, ...userData } = req.body || {};
+
   const userData = req.body || {};
   const user = await userServices.getUserById(id);
   if (!user) {
     throw createError(404, `User with id=${id} not found`);
   }
-  // if (oldPassword && newPassword) {
-  //   await resetPassword(id, oldPassword, newPassword);
-  // }
 
   const result = await userServices.updateUser({ _id: id }, userData);
 

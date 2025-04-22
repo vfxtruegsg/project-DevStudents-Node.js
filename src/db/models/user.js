@@ -6,10 +6,14 @@ const usersSchema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     balance: { type: Number, default: 0 },
-    avatarUrl: { type: String },
-    // oldPassword: {
-    //   type: String,
-    // },
+    avatar: {
+      url: {
+        type: String,
+        default:
+          'https://asset.cloudinary.com/dsunzgaal/5080f18d35d5dbf7bee90c0800a0a7fa',
+      },
+      public_id: { type: String, default: 'default-avatar' },
+    },
   },
   { timestamps: true, versionKey: false },
 );
