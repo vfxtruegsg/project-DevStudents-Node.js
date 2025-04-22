@@ -58,8 +58,7 @@ export const updateUserAvatarController = async (req, res) => {
     throw createError(500, 'Failed to update user avatar');
   }
 
-  // Assuming the result includes user data with the updated avatar
-  const updatedUser = result.data || result; // Ensure we safely access the user data
+  const updatedUser = result.data || result;
 
   res.json({
     status: 200,
