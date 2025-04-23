@@ -13,7 +13,7 @@ export const registerUserController = async (req, res) => {
 
   res.status(201).json({
     status: 201,
-    message: 'Successfully registered a user!',
+    message: 'Successfully registered a user and logged in!',
     data: {
       user,
       accessToken: session.accessToken,
@@ -22,7 +22,7 @@ export const registerUserController = async (req, res) => {
 };
 
 export const loginUserController = async (req, res) => {
-  const session = await loginUser(req.body);
+  const { session, user } = await loginUser(req.body);
 
   setupSession(res, session);
 
@@ -31,6 +31,7 @@ export const loginUserController = async (req, res) => {
     message: 'Successfully logged in an user!',
     data: {
       accessToken: session.accessToken,
+      userId: user._id,
     },
   });
 };
