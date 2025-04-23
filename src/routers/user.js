@@ -25,16 +25,9 @@ userRouter.get(
 );
 
 userRouter.patch(
-  '/:id/avatar',
-  isValidUserId,
-  upload.single('avatar'),
-  ctrlWrapper(userController.updateUserAvatarController),
-);
-
-userRouter.patch(
   '/:id',
   isValidUserId,
-  validateBody(userValidSchema.userUpdateSchema),
+  upload.single('avatar'),
   ctrlWrapper(userController.updateUserController),
 );
 

@@ -32,10 +32,15 @@ export const loginUser = async (payload) => {
 
   const newSession = createSession();
 
-  return await SessionsCollection.create({
+  const session = await SessionsCollection.create({
     userId: user._id,
     ...newSession,
   });
+
+  return {
+    session,
+    user,
+  };
 };
 
 export const logoutUser = async (sessionId) => {
