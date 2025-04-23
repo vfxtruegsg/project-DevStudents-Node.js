@@ -33,7 +33,7 @@ export const updateUserAvatarController = async (req, res) => {
     throw createError(404, `User with id=${id} not found`);
   }
 
-  if (user.avatar?.public_id) {
+  if (user.avatar?.public_id && user.avatar.public_id !== 'default-avatar') {
     await cloudUse.deleteFileFromCloudinary(user.avatar.public_id);
   }
 
@@ -49,6 +49,10 @@ export const updateUserAvatarController = async (req, res) => {
     },
   );
 
+  if (!result || !result.data || !result.data.avatar) {
+    throw createError(500, 'Failed to update user avatar');
+  }
+
   res.json({
     status: 200,
     message: 'Avatar updated successfully',
@@ -60,15 +64,12 @@ export const updateUserAvatarController = async (req, res) => {
 
 export const updateUserController = async (req, res) => {
   const { id } = req.params;
-  // const { oldPassword, newPassword, ...userData } = req.body || {};
+
   const userData = req.body || {};
   const user = await userServices.getUserById(id);
   if (!user) {
     throw createError(404, `User with id=${id} not found`);
   }
-  // if (oldPassword && newPassword) {
-  //   await resetPassword(id, oldPassword, newPassword);
-  // }
 
   const result = await userServices.updateUser({ _id: id }, userData);
 
