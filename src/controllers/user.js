@@ -25,24 +25,19 @@ export const updateUserAvatarController = async (req, res) => {
   const avatar = req.file;
 
   if (!avatar) {
-    console.error('No avatar file provided');
     throw createError(400, 'Avatar file is required');
   }
 
-  console.log('Getting user by ID:', id);
   const user = await userServices.getUserById(id);
   if (!user) {
-    console.error(`User with id=${id} not found`);
     throw createError(404, `User with id=${id} not found`);
   }
 
   if (user.avatar?.public_id && user.avatar.public_id !== 'default-avatar') {
-    console.log('Deleting old avatar from Cloudinary');
     await cloudUse.deleteFileFromCloudinary(user.avatar.public_id);
   }
 
   const avatarData = await cloudUse.saveAvatarToCloudinary(avatar);
-  console.log('Cloudinary upload response:', avatarData);
 
   const result = await userServices.updateUser(
     { _id: id },
@@ -57,8 +52,6 @@ export const updateUserAvatarController = async (req, res) => {
   if (!result || !result.data || !result.data.avatar) {
     throw createError(500, 'Failed to update user avatar');
   }
-
-  const updatedUser = result.data || result;
 
   res.json({
     status: 200,

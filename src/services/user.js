@@ -17,6 +17,7 @@ export const updateUser = async (filter, update, options = {}) => {
 
   const result = await UsersCollection.findOneAndUpdate(filter, update, {
     new: true,
+    includeResultMetadata: true,
     upsert,
     rawResult: true,
   });
@@ -28,4 +29,5 @@ export const updateUser = async (filter, update, options = {}) => {
     data: result.value,
   };
 };
+
 export const getSession = (filter) => SessionsCollection.findOne(filter);
