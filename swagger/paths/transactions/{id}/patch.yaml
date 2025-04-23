@@ -1,0 +1,94 @@
+tags:
+  - Transactions
+summary: Patch transaction by id
+operationId: patchTransaction
+description: 'Patch a transaction by id with payload'
+security:
+  - bearerAuth: []
+parameters:
+  - in: path
+    name: id
+    required: true
+    schema:
+      type: string
+      example: '65ca67e7ae7f10c88b598384'
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+
+        properties:
+          date:
+            description: "Transaction's created time"
+            type: string
+            format: date-time
+            example: '2025-03-21T20:47:45.791Z'
+          type:
+            description: "Transaction's type"
+            type: string
+            enum: ['income', 'expense']
+            example: 'income'
+          category:
+            description: "Transaction's category"
+            type: string
+            enum:
+              [
+                'Incomes',
+                'Main expenses',
+                'Products',
+                'Car',
+                'Self care',
+                'Child care',
+                'Household products',
+                'Education',
+                'Leisure',
+                'Other expenses',
+                'Entertainment',
+              ]
+            example: 'Incomes'
+          comment:
+            description: "Transaction's comment"
+            type: string
+            example: 'Vanish'
+          sum:
+            description: "Transaction's sum"
+            type: number
+            example: 100
+
+responses:
+  '200':
+    description: Patched a transaction
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully patched a transaction!
+            data:
+              type: object
+              $ref: ../../../components/schemas/result.yaml
+
+  '400':
+    description: Bad request error
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: ../../../components/responses/schemas/400invalidIdOrTransaction.yaml
+            - $ref: '../../../components/responses/schemas/400.yaml'
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
