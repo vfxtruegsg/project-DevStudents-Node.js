@@ -20,63 +20,97 @@ export const getUserByIdController = async (req, res) => {
   });
 };
 
-export const updateUserAvatarController = async (req, res) => {
-  const { id } = req.params;
-  const avatar = req.file;
+// export const updateUserAvatarController = async (req, res) => {
+//   const { id } = req.params;
+//   const avatar = req.file;
 
-  if (!avatar) {
-    throw createError(400, 'Avatar file is required');
-  }
+//   if (!avatar) {
+//     throw createError(400, 'Avatar file is required');
+//   }
 
-  const user = await userServices.getUserById(id);
-  if (!user) {
-    throw createError(404, `User with id=${id} not found`);
-  }
+//   const user = await userServices.getUserById(id);
+//   if (!user) {
+//     throw createError(404, `User with id=${id} not found`);
+//   }
 
-  if (user.avatar?.public_id && user.avatar.public_id !== 'default-avatar') {
-    await cloudUse.deleteFileFromCloudinary(user.avatar.public_id);
-  }
+//   if (user.avatar?.public_id && user.avatar.public_id !== 'default-avatar') {
+//     await cloudUse.deleteFileFromCloudinary(user.avatar.public_id);
+//   }
 
-  const avatarData = await cloudUse.saveAvatarToCloudinary(avatar);
+//   const avatarData = await cloudUse.saveAvatarToCloudinary(avatar);
 
-  const result = await userServices.updateUser(
-    { _id: id },
-    {
-      avatar: {
-        url: avatarData.url,
-        public_id: avatarData.public_id,
-      },
-    },
-  );
+//   const result = await userServices.updateUser(
+//     { _id: id },
+//     {
+//       avatar: {
+//         url: avatarData.url,
+//         public_id: avatarData.public_id,
+//       },
+//     },
+//   );
 
-  if (!result || !result.data || !result.data.avatar) {
-    throw createError(500, 'Failed to update user avatar');
-  }
+//   if (!result || !result.data || !result.data.avatar) {
+//     throw createError(500, 'Failed to update user avatar');
+//   }
 
-  res.json({
-    status: 200,
-    message: 'Avatar updated successfully',
-    data: {
-      avatarUrl: result.data.avatar.url,
-    },
-  });
-};
+//   res.json({
+//     status: 200,
+//     message: 'Avatar updated successfully',
+//     data: {
+//       avatarUrl: result.data.avatar.url,
+//     },
+//   });
+// };
+
+// export const updateUserController = async (req, res) => {
+//   const { id } = req.params;
+
+//   const userData = req.body || {};
+//   const user = await userServices.getUserById(id);
+//   if (!user) {
+//     throw createError(404, `User with id=${id} not found`);
+//   }
+
+//   const result = await userServices.updateUser({ _id: id }, userData);
+
+//   res.json({
+//     status: 200,
+//     message: `User with id=${id} updated successfully`,
+//     data: result,
+//   });
+// };
 
 export const updateUserController = async (req, res) => {
   const { id } = req.params;
+  const updates = { ...req.body };
 
-  const userData = req.body || {};
   const user = await userServices.getUserById(id);
   if (!user) {
     throw createError(404, `User with id=${id} not found`);
   }
 
-  const result = await userServices.updateUser({ _id: id }, userData);
+  if (req.file) {
+    if (user.avatar?.public_id && user.avatar.public_id !== 'default-avatar') {
+      await cloudUse.deleteFileFromCloudinary(user.avatar.public_id);
+    }
+
+    const avatarData = await cloudUse.saveAvatarToCloudinary(req.file);
+    updates.avatar = {
+      url: avatarData.url,
+      public_id: avatarData.public_id,
+    };
+  }
+
+  const result = await userServices.updateUser({ _id: id }, updates);
+
+  if (!result || !result.data) {
+    throw createError(500, 'Failed to update user');
+  }
 
   res.json({
     status: 200,
     message: `User with id=${id} updated successfully`,
-    data: result,
+    data: result.data,
   });
 };
 
