@@ -1,4 +1,4 @@
-description: Not found error
+description: Conflict error
 content:
   application/json:
     schema:
@@ -10,11 +10,7 @@ content:
       properties:
         status:
           type: integer
-          example: 404
+          example: 409
         message:
           type: string
-          example:
-            oneOf:
-              - 'Transaction not found'
-              - 'User not found'
-              - 'Session not found'
+          example: 'Email in use'

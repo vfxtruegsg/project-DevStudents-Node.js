@@ -13,4 +13,8 @@ content:
           example: 401
         message:
           type: string
-          example: 'Auth header should be of type Bearer'
+          example:
+            oneOf:
+              - 'Auth header should be of type Bearer'
+              - 'Session not found'
+              - 'Session token expired'

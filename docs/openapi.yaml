@@ -37,29 +37,21 @@ paths:
     get:
       $ref: ../swagger/paths/transactions/summary/get.yaml
 
-  # /auth/register:
-  #   post:
-  #     $ref: ../swagger/paths/auth/register/post.yaml
+  /auth/register:
+    post:
+      $ref: ../swagger/paths/auth/register/post.yaml
 
-  # /auth/login:
-  #   post:
-  #     $ref: ../swagger/paths/auth/login/post.yaml
+  /auth/login:
+    post:
+      $ref: ../swagger/paths/auth/login/post.yaml
 
-  # /auth/refresh:
-  #   post:
-  #     $ref: ../swagger/paths/auth/refresh/post.yaml
+  /auth/logout:
+    post:
+      $ref: ../swagger/paths/auth/logout/post.yaml
 
-  # /auth/logout:
-  #   post:
-  #     $ref: ../swagger/paths/auth/logout/post.yaml
-
-  # /auth/send-reset-email:
-  #   post:
-  #     $ref: ../swagger/paths/auth/send-reset-email/post.yaml
-
-  # /auth/reset-pwd:
-  #   post:
-  #     $ref: ../swagger/paths/auth/reset-pwd/post.yaml
+  /auth/refresh:
+    post:
+      $ref: ../swagger/paths/auth/refresh/post.yaml
 
 components:
   securitySchemes:
