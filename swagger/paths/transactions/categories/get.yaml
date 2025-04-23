@@ -1,0 +1,59 @@
+tags:
+  - Transactions
+summary: Get list of transactions categories
+operationId: getCategories
+description: 'Get list of categories for specific type with this endpoint'
+security:
+  - bearerAuth: []
+parameters:
+  - in: query
+    name: type
+    schema:
+      type: string
+      enum: ['income', 'expense']
+      example: 'income'
+      description: 'Get list of categories for specific type'
+responses:
+  '200':
+    description: Successfully  given a transaction category!
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: 'Successfully given a transaction category!'
+            data:
+              oneOf:
+                - type: string
+                  example: 'Incomes'
+                - type: array
+                  items:
+                    type: string
+                    enum:
+                      [
+                        'Main expenses',
+                        'Products',
+                        'Car',
+                        'Self care',
+                        'Child care',
+                        'Household products',
+                        'Education',
+                        'Leisure',
+                        'Other expenses',
+                        'Entertainment',
+                      ]
+                    example: 'Products'
+
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'

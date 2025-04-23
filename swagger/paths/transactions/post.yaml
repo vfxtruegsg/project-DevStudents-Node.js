@@ -1,0 +1,91 @@
+tags:
+  - Transactions
+summary: Create transaction
+operationId: createTransaction
+description: 'Create a transaction with payload'
+security:
+  - bearerAuth: []
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - date
+          - type
+          - category
+          - comment
+          - sum
+
+        properties:
+          date:
+            description: "Transaction's created time"
+            type: string
+            format: date-time
+            example: '2025-03-21T20:47:45.791Z'
+          type:
+            description: "Transaction's type"
+            type: string
+            enum: ['income', 'expense']
+            example: 'income'
+          category:
+            description: "Transaction's category"
+            type: string
+            enum:
+              [
+                'Incomes',
+                'Main expenses',
+                'Products',
+                'Car',
+                'Self care',
+                'Child care',
+                'Household products',
+                'Education',
+                'Leisure',
+                'Other expenses',
+                'Entertainment',
+              ]
+            example: 'Incomes'
+          comment:
+            description: "Transaction's comment"
+            type: string
+            example: 'Vanish'
+          sum:
+            description: "Transaction's sum"
+            type: number
+            example: 100
+
+responses:
+  '201':
+    description: Create a transaction
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 201
+            message:
+              type: string
+              example: Successfully created a transaction!
+            data:
+              type: object
+              $ref: ../../components/schemas/result.yaml
+  '400':
+    description: Bad request error
+    content:
+      application/json:
+        schema:
+          oneOf:
+            - $ref: ../../components/responses/schemas/400.yaml
+            - $ref: ../../components/responses/schemas/400invalidIdOrTransaction.yaml
+
+  '401':
+    $ref: '../../components/responses/401.yaml'
+  '500':
+    $ref: '../../components/responses/500.yaml'

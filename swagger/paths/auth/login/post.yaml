@@ -1,0 +1,71 @@
+tags:
+  - Auth
+summary: Login user
+operationId: loginUser
+description: 'Login user with payload'
+
+security: []
+
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        required:
+          - email
+          - password
+        properties:
+          email:
+            description: "User's email"
+            type: string
+            example: 'adf@gmail.com'
+          password:
+            description: "User's password"
+            type: string
+            example: 'home2341'
+
+responses:
+  '200':
+    description: Logged in an user
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully logged in an user!
+            data:
+              type: object
+              required:
+                - accessToken
+
+              properties:
+                accessToken:
+                  type: string
+                  example: /aRQeiCt5ZsUAcwgT6inTkFBVdIQlZ5I16LBdQQo
+    headers:
+      Set-Cookie:
+        schema:
+          type: string
+          example: refreshToken=I8pFv8krW8u%2Bj2ZnpsNfRMADUQNCILbg0XLp2lvT;sessionId=j%3A%226807e05ee088a4438345b958%22
+
+  '400':
+    description: Bad request error
+    content:
+      application/json:
+        schema:
+          $ref: ../../../components/responses/schemas/400.yaml
+  '401':
+    $ref: '../../../components/responses/401.yaml'
+  '404':
+    $ref: '../../../components/responses/404.yaml'
+  '500':
+    $ref: '../../../components/responses/500.yaml'
