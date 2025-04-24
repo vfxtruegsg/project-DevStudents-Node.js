@@ -7,7 +7,9 @@ import { setupSession } from '../utils/setupSession.js';
 export const registerUserController = async (req, res) => {
   const user = await registerUser(req.body);
 
-  const session = await loginUser(req.body);
+  const { email, password } = req.body;
+
+  const session = await loginUser({ email, password });
 
   setupSession(res, session);
 
@@ -16,7 +18,7 @@ export const registerUserController = async (req, res) => {
     message: 'Successfully registered a user and logged in!',
     data: {
       user,
-      accessToken: session.accessToken,
+      accessToken: session.session.accessToken,
     },
   });
 };

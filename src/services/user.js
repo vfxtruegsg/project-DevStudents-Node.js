@@ -1,16 +1,15 @@
 import { UsersCollection } from '../db/models/user.js';
-import { SessionsCollection } from '../db/models/session.js';
+import createHttpError from 'http-errors';
 
 export const getUserById = async (id) => {
   const user = await UsersCollection.findById(id);
 
   if (!user) {
-    return null;
+    throw createHttpError(404, 'User not found!');
   }
+
   return user;
 };
-
-export const getUser = (filter) => UsersCollection.findOne(filter);
 
 export const updateUser = async (filter, update, options = {}) => {
   const { upsert = false } = options;
@@ -22,12 +21,10 @@ export const updateUser = async (filter, update, options = {}) => {
     rawResult: true,
   });
 
-  if (!result || !result.value) return null;
+  if (!result || !result.value) throw createHttpError(404, 'Not found!');
 
   return {
     isNew: Boolean(result.lastErrorObject?.upserted),
     data: result.value,
   };
 };
-
-export const getSession = (filter) => SessionsCollection.findOne(filter);

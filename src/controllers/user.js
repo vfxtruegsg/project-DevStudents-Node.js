@@ -1,32 +1,30 @@
-import createError from 'http-errors';
 import * as userServices from '../services/user.js';
-
 import * as cloudUse from '../utils/saveFileToCloudinary.js';
-import { getSession, resetPassword } from '../services/auth.js';
 import createHttpError from 'http-errors';
 
-export const getUserByIdController = async (req, res) => {
-  const { id } = req.params;
+export const getCurrentUserDataController = async (req, res) => {
+  const userData = req.user;
 
-  const data = await userServices.getUserById(id);
+  const data = await userServices.getUserById(userData._id);
 
   if (!data) {
-    throw createError(404, `User with id=${id} not found`);
+    throw createHttpError(404, `User with id=${userData._id} not found`);
   }
+
   res.json({
     status: 200,
-    message: `Successfully found user with id=${id}`,
+    message: `Successfully found user with id=${userData._id}`,
     data,
   });
 };
 
 export const updateUserController = async (req, res) => {
-  const { id } = req.params;
+  const userData = req.user;
   const updates = { ...req.body };
 
-  const user = await userServices.getUserById(id);
+  const user = await userServices.getUserById(userData._id);
   if (!user) {
-    throw createError(404, `User with id=${id} not found`);
+    throw createHttpError(404, `User with id=${userData._id} not found`);
   }
 
   if (req.file) {
@@ -41,34 +39,15 @@ export const updateUserController = async (req, res) => {
     };
   }
 
-  const result = await userServices.updateUser({ _id: id }, updates);
+  const result = await userServices.updateUser({ _id: userData._id }, updates);
 
   if (!result || !result.data) {
-    throw createError(500, 'Failed to update user');
+    throw createHttpError(500, 'Failed to update user');
   }
 
   res.json({
     status: 200,
-    message: `User with id=${id} updated successfully`,
+    message: `User with id=${userData._id} updated successfully`,
     data: result.data,
-  });
-};
-
-export const getCurrentUserController = async (req, res, next) => {
-  const user = req.user;
-  const session = await getSession({ userId: user._id });
-
-  if (!session) {
-    return next(createHttpError(401, 'Session not found'));
-  }
-
-  res.json({
-    status: 200,
-    message: 'User data retrieved successfully',
-    data: {
-      userId: user._id,
-      accessToken: session.accessToken,
-      sessionId: session._id,
-    },
   });
 };
