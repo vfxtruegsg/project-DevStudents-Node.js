@@ -13,11 +13,19 @@ export const registerUserController = async (req, res) => {
 
   setupSession(res, session);
 
+  const cleanUserData = {
+    name: user.name,
+    email: user.email,
+    balance: user.balance,
+    avatar: user.avatar.url,
+    _id: user._id,
+  };
+
   res.status(201).json({
     status: 201,
     message: 'Successfully registered a user and logged in!',
     data: {
-      user,
+      ...cleanUserData,
       accessToken: session.session.accessToken,
     },
   });
