@@ -11,7 +11,7 @@ export const registerUserController = async (req, res) => {
 
   const session = await loginUser({ email, password });
 
-  setupSession(res, session);
+  setupSession(res, session.session);
 
   const cleanUserData = {
     name: user.name,
@@ -62,6 +62,8 @@ export const refreshUserSessionController = async (req, res) => {
     sessionId: req.cookies.sessionId,
     refreshToken: req.cookies.refreshToken,
   });
+
+  console.log(session);
 
   setupSession(res, session);
 
