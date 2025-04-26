@@ -6,14 +6,17 @@ content:
       required:
         - status
         - message
-        - data
+
       properties:
         status:
           type: integer
           example: 500
         message:
           type: string
-          example: 'Something went wrong'
+          example:
+            oneOf:
+              - 'Something went wrong'
+              - 'Failed to update user'
         data:
           type: object
           required:

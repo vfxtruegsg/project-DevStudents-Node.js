@@ -11,8 +11,9 @@ tags:
     description: Operations about Transactions
   - name: Auth
     description: Authentication Operations
+  - name: User
+    description: User Operations
 servers:
-  - url: http://localhost:3000
   - url: https://project-devstudents-node-js.onrender.com
 paths:
   /transactions:
@@ -52,6 +53,14 @@ paths:
   /auth/refresh:
     post:
       $ref: ../swagger/paths/auth/refresh/post.yaml
+
+  /user/current:
+    get:
+      $ref: ../swagger/paths/user/current/get.yaml
+
+  /user/update:
+    patch:
+      $ref: ../swagger/paths/user/update/patch.yaml
 
 components:
   securitySchemes:
