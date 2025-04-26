@@ -9,6 +9,7 @@ import { getEnvVar } from './utils/getEnvVar.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { swaggerDocs } from './middlewares/swaggerDocs .js';
+import { rateLimiter } from './middlewares/rateLimiter.js';
 
 const PORT = Number(getEnvVar('PORT', '3000'));
 
@@ -42,6 +43,8 @@ export const startServer = () => {
       },
     }),
   );
+
+  app.use(rateLimiter);
 
   app.use(router);
 
