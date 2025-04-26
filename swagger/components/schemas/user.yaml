@@ -4,6 +4,7 @@ required:
   - name
   - email
   - balance
+  - avatar
   - createdAt
   - updatedAt
 
@@ -24,6 +25,20 @@ properties:
     description: "User's balance"
     type: number
     example: 12900
+  avatar:
+    description: "User's account avatar"
+    type: object
+    required:
+      - url
+      - public_id
+    properties:
+      url:
+        type: string
+        format: url
+        example: 'https://res.cloudinary/dfgh/image/upload/v15egdjyg/uyhkuyh.jpg'
+      public_id:
+        type: string
+        example: 'default-avatar'
   createdAt:
     description: "User's account created time"
     type: string

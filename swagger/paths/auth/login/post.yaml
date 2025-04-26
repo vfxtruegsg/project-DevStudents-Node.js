@@ -46,11 +46,15 @@ responses:
               type: object
               required:
                 - accessToken
+                - userId
 
               properties:
                 accessToken:
                   type: string
                   example: /aRQeiCt5ZsUAcwgT6inTkFBVdIQlZ5I16LBdQQo
+                userId:
+                  type: string
+                  example: 65e4decdd286b30065d54af9
     headers:
       Set-Cookie:
         schema:

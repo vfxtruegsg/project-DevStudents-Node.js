@@ -18,3 +18,4 @@ content:
               - 'Transaction not found'
               - 'User not found'
               - 'Session not found'
+              - 'User with id=userData._id not found'

@@ -1,20 +1,17 @@
 tags:
-  - Auth
-summary: Register user
-operationId: registerUser
-description: 'Register user with payload'
-
-security: []
+  - User
+summary: Patch user info
+operationId: updateUser
+description: 'Patch a user info by id with payload'
+security:
+  - bearerAuth: []
 
 requestBody:
   content:
-    application/json:
+    multipart/form-data:
       schema:
         type: object
-        required:
-          - name
-          - email
-          - password
+
         properties:
           name:
             description: "User's name"
@@ -24,14 +21,14 @@ requestBody:
             description: "User's email"
             type: string
             example: 'adf@gmail.com'
-          password:
-            description: "User's password"
+          avatar:
+            description: "User's account avatar"
             type: string
-            example: 'home2341'
+            format: binary
 
 responses:
-  '201':
-    description: Creates a user
+  '200':
+    description: Patched a User's account
     content:
       application/json:
         schema:
@@ -43,31 +40,24 @@ responses:
           properties:
             status:
               type: integer
-              example: 201
+              example: 200
             message:
               type: string
-              example: Successfully registered a user and logged in!
+              example: User with id=userData._id updated successfully
             data:
               type: object
-              $ref: ../../../components/schemas/userWithToken.yaml
-
-    headers:
-      Set-Cookie:
-        schema:
-          type: string
-          example: refreshToken=I8pFv8krW8u%2Bj2ZnpsNfRMADUQNCILbg0XLp2lvT;sessionId=j%3A%226807e05ee088a4438345b958%22
+              $ref: ../../../components/schemas/user.yaml
 
   '400':
     description: Bad request error
     content:
       application/json:
         schema:
-          $ref: ../../../components/responses/schemas/400.yaml
+          $ref: ../../../components/responses/schemas/400invalidIdOrTransaction.yaml
+
   '401':
     $ref: '../../../components/responses/401.yaml'
   '404':
     $ref: '../../../components/responses/404.yaml'
-  '409':
-    $ref: '../../../components/responses/409.yaml'
   '500':
     $ref: '../../../components/responses/500.yaml'

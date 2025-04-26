@@ -1,0 +1,35 @@
+type: object
+required:
+  - _id
+  - name
+  - email
+  - balance
+  - avatar
+  - accessToken
+
+properties:
+  _id:
+    description: "User's id"
+    type: string
+    example: '65e4decdd286b30065d54af9'
+  name:
+    description: "User's name"
+    type: string
+    example: 'John Doe'
+  email:
+    description: "User's email"
+    type: string
+    example: 'adf@gmail.com'
+  balance:
+    description: "User's balance"
+    type: number
+    example: 12900
+  avatar:
+    description: "User's account avatar"
+    type: string
+    format: url
+    example: 'https://res.cloudinary/dfgh/image/upload/v15egdjyg/uyhkuyh.jpg'
+  accessToken:
+    description: "User's account access token"
+    type: string
+    example: '/aRQeiCt5ZsUAcwgT6inTkFBVdIQlZ5I16LBdQQo'

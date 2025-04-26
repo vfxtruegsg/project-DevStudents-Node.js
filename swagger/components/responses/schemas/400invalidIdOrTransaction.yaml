@@ -8,4 +8,9 @@ properties:
     example: 400
   message:
     type: string
-    example: 'Bad Request'
+    example:
+      oneOf:
+        - 'Bad Request'
+        - 'Only image files are allowed'
+        - 'File extension .extension is not allowed. Use: allowedExtensions'
+        - 'file with .exe extention not allow'
