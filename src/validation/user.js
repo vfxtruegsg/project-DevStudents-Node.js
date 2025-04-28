@@ -12,7 +12,4 @@ export const userUpdateSchema = Joi.object({
   name: Joi.string().min(3).max(30).optional().messages({
     'string.max': 'The maximum name length is 30 characters',
   }),
-  email: Joi.string().pattern(emailRegexp).max(64).optional().messages({
-    'string.email': 'Invalid email format',
-  }),
 });

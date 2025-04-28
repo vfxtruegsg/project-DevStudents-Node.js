@@ -17,10 +17,7 @@ requestBody:
             description: "User's name"
             type: string
             example: 'John Doe'
-          email:
-            description: "User's email"
-            type: string
-            example: 'adf@gmail.com'
+
           avatar:
             description: "User's account avatar"
             type: string
