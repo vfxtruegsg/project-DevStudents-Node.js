@@ -53,7 +53,9 @@ responses:
     content:
       application/json:
         schema:
-          $ref: ../../../components/responses/schemas/400invalidIdOrTransaction.yaml
+          oneOf:
+            - $ref: ../../../components/responses/schemas/400invalidIdOrTransaction.yaml
+            - $ref: ../../../components/responses/schemas/400.yaml
 
   '401':
     $ref: '../../../components/responses/401.yaml'

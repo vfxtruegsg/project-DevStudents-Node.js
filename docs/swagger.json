@@ -1097,7 +1097,14 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/400invalidIdOrTransaction"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/400invalidIdOrTransaction"
+                    },
+                    {
+                      "$ref": "#/components/schemas/400"
+                    }
+                  ]
                 }
               }
             }
