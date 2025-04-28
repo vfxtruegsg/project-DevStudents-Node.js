@@ -4,6 +4,8 @@ import * as userController from '../controllers/user.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 
 import { upload } from '../middlewares/upload.js';
+import { validateBody } from '../middlewares/validateBody.js';
+import { userUpdateSchema } from '../validation/user.js';
 
 const userRouter = Router();
 
@@ -17,6 +19,7 @@ userRouter.get(
 userRouter.patch(
   '/update',
   upload.single('avatar'),
+  validateBody(userUpdateSchema),
   ctrlWrapper(userController.updateUserController),
 );
 
