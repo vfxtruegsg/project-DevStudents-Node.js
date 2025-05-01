@@ -1,5 +1,5 @@
 import { randomBytes } from 'crypto';
-import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
+import { ONE_DAY, THREE_HOURS } from '../constants/index.js';
 
 export const createSession = () => {
   const accessToken = randomBytes(30).toString('base64');
@@ -8,7 +8,7 @@ export const createSession = () => {
   return {
     accessToken,
     refreshToken,
-    accessTokenValidUntil: new Date(Date.now() + FIFTEEN_MINUTES),
+    accessTokenValidUntil: new Date(Date.now() + THREE_HOURS),
     refreshTokenValidUntil: new Date(Date.now() + ONE_DAY),
   };
 };
