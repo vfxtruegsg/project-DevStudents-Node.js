@@ -44,7 +44,7 @@ export const startServer = () => {
     }),
   );
 
-  app.use(rateLimiter);
+  // app.use(rateLimiter);
 
   app.use(router);
 
