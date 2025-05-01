@@ -104,7 +104,7 @@ export const deleteTransaction = async (id, userId) => {
 
 export const getTransactionsSummary = async (month, year, userId) => {
   const firstDayOfPeriod = new Date(year, month, 1);
-  const firstDayOfNextPeriod = new Date(year, month, 1);
+  const firstDayOfNextPeriod = new Date(year, month + 1, 1);
   const transactions = await TransactionsCollection.find({ userId })
     .where('date')
     .gte(firstDayOfPeriod)
