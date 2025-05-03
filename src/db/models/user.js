@@ -10,7 +10,7 @@ const usersSchema = new Schema(
       url: {
         type: String,
         default:
-          'https://asset.cloudinary.com/dsunzgaal/5080f18d35d5dbf7bee90c0800a0a7fa',
+          'https://res.cloudinary.com/dsunzgaal/image/upload/default_img_zcoijb.jpg',
       },
       public_id: { type: String, default: 'default-avatar' },
     },
